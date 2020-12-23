@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,18 @@ namespace WeatherForecastApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("Bearer")   
+                .AddJwtBearer("Bearer", opt =>
+                {
+                    opt.RequireHttpsMetadata = false;
+                    opt.Authority = "http://localhost:5000";
+                    //opt.Audience = "WeatherForecastApi";
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
+
             services.AddControllers();
         }
 
@@ -36,6 +49,8 @@ namespace WeatherForecastApi
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
