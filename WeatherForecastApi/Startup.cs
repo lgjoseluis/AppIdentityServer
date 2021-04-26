@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,15 +26,17 @@ namespace WeatherForecastApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.AddAuthentication("Bearer")   
                 .AddJwtBearer("Bearer", opt =>
                 {
                     opt.RequireHttpsMetadata = false;
                     opt.Authority = "http://localhost:5000";
-                    //opt.Audience = "WeatherForecastApi";
+                    opt.Audience = "WeatherForecastApi";
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateAudience = false
+                        //ValidateAudience = false
                     };
                 });
 
