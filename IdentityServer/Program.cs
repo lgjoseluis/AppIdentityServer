@@ -18,6 +18,12 @@ namespace IdentityServer
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((builderContext, config) => {
+                    string environmentName = builderContext.HostingEnvironment.EnvironmentName;
+
+                    config.AddJsonFile("appsettings.json", optional:false, reloadOnChange:true)
+                            .AddJsonFile($"appsettings.{environmentName}.json", optional: false, reloadOnChange: true);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

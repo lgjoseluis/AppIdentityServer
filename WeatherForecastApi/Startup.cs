@@ -33,10 +33,11 @@ namespace WeatherForecastApi
                 {
                     opt.RequireHttpsMetadata = false;
                     opt.Authority = "http://localhost:5000";
-                    opt.Audience = "WeatherForecastApi";
+                    opt.Audience = "WeatherForecastApiResource";
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
                         //ValidateAudience = false
+                        RoleClaimType = "role"
                     };
                 });
 

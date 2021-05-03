@@ -351,3 +351,11 @@ MigrationBackup/
 
 # Identity Server - developer signing key
 *.jwk
+
+#appsettings.Enviroment.json
+**/appsettings.Development.json
+**/appsettings.staging.json
+**/appsettings.production.
+
+# TXT files
+*.txt
